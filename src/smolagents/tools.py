@@ -279,7 +279,8 @@ class Tool:
                 raise (ValueError("\n".join(method_checker.errors)))
 
             forward_source_code = inspect.getsource(self.forward)
-            tool_code = textwrap.dedent(f"""
+            tool_code = textwrap.dedent(
+                f"""
             from smolagents import Tool
             from typing import Optional
 
@@ -288,7 +289,8 @@ class Tool:
                 description = "{self.description}"
                 inputs = {json.dumps(self.inputs, separators=(',', ':'))}
                 output_type = "{self.output_type}"
-            """).strip()
+            """
+            ).strip()
             import re
 
             def add_self_argument(source_code: str) -> str:
@@ -329,7 +331,8 @@ class Tool:
         app_file = os.path.join(output_dir, "app.py")
         with open(app_file, "w", encoding="utf-8") as f:
             f.write(
-                textwrap.dedent(f"""
+                textwrap.dedent(
+                    f"""
             from smolagents import launch_gradio_demo
             from typing import Optional
             from tool import {class_name}
@@ -337,7 +340,8 @@ class Tool:
             tool = {class_name}()
 
             launch_gradio_demo(tool)
-            """).lstrip()
+            """
+                ).lstrip()
             )
 
         # Save requirements file
